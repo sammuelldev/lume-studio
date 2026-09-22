@@ -1,17 +1,25 @@
+import galleryImages from './gallery-images.json';
+
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  label: string;
+  width: number;
+  height: number;
+};
 export type Project = {
   id: string;
   name: string;
   description: string;
   category: string;
-  image: string;
-  imageAlt: string;
-  url: string;
+  gallery: GalleryImage[];
   status?: string;
   featured?: boolean;
   source: string;
 };
 
-// Para incluir um trabalho: adicione um registro e a captura em public/projects.
+// As galerias exibem somente capturas, sem links para abrir os sites.
+// Máximo de seis imagens por trabalho. Fontes mantidas apenas para documentação.
 export const projects: Project[] = [
   {
     id: 'mypace',
@@ -19,51 +27,38 @@ export const projects: Project[] = [
     category: 'Aplicação web',
     description:
       'Uma experiência para organizar a rotina de corrida, acompanhar treinos e enxergar a própria evolução.',
-    image: 'projects/mypace.png',
-    imageAlt:
-      'Interface de acesso do MyPace, aplicativo de planejamento de corrida',
-    url: 'https://sammuelldev.github.io/my-pace/',
+    gallery: galleryImages.mypace,
     source:
-      'https://github.com/sammuelldev/my-pace — README e publicação GitHub Pages',
+      'https://github.com/sammuelldev/my-pace — capturas apenas das telas públicas, sem dados pessoais.',
   },
   {
     id: 'arquibancada',
     name: 'Arquibancada Store',
     category: 'Catálogo digital',
     description:
-      'A paixão pelo futebol em um catálogo de camisas, com busca por time, filtros e atendimento pelo WhatsApp.',
-    image: 'projects/arquibancada.png',
-    imageAlt:
-      'Página da Arquibancada Store com identidade de futebol e catálogo de camisas',
-    url: 'https://sammuelldev.github.io/loja-de-camisas/',
-    source:
-      'https://github.com/sammuelldev/loja-de-camisas — index.html e publicação GitHub Pages',
+      'A paixão pelo futebol em um catálogo de camisas, com busca por time e filtros para encontrar a próxima escolha.',
+    gallery: galleryImages.arquibancada,
+    source: 'https://github.com/sammuelldev/loja-de-camisas',
   },
   {
     id: 'nvrmind',
     name: 'NVRMIND',
     category: 'Interface de e-commerce',
     description:
-      'Moda independente em uma experiência editorial. Coleção, páginas de produto, favoritos e sacola em uma prévia navegável.',
-    image: 'projects/nvrmind.png',
-    imageAlt:
-      'Interface da NVRMIND com fotografia urbana e o título A cidade é nossa',
-    url: 'projetos/nvrmind/index.html',
+      'Moda independente em uma experiência editorial. Coleção, páginas de produto e o universo visual da marca.',
+    gallery: galleryImages.nvrmind,
     status: 'Projeto demonstrativo',
     featured: true,
     source:
-      'sites para portfolio/nvrmind-site/README.md; cópia independente em demos/nvrmind',
+      'Cópia local em demos/nvrmind. O site demonstrativo não é incluído na publicação.',
   },
   {
     id: 'burgues',
     name: 'Burguês',
     category: 'Site gastronômico',
     description:
-      'Uma hamburgueria artesanal apresentada com personalidade, cardápio por categorias e uma sacola demonstrativa.',
-    image: 'projects/burgues.png',
-    imageAlt:
-      'Interface do Burguês em preto e amarelo com fotografia de hambúrguer artesanal',
-    url: 'https://sammuelldev.github.io/burgues-hamburgueria/',
+      'Uma hamburgueria artesanal apresentada com personalidade, cardápio por categorias e atenção aos detalhes.',
+    gallery: galleryImages.burgues,
     status: 'Projeto conceitual',
     source: 'sites para portfolio/burgues-hamburgueria-main/README.md',
   },
@@ -73,22 +68,14 @@ export const projects: Project[] = [
     category: 'Site gastronômico',
     description:
       'Uma composição delicada para a gastronomia japonesa, com cardápio, galeria e seleção de pratos favoritos.',
-    image: 'projects/yuugan.png',
-    imageAlt:
-      'Interface do Yuugan Sushi com fotografia gastronômica e composição editorial escura',
-    url: 'https://sammuelldev.github.io/yuugan-sushi/',
+    gallery: galleryImages.yuugan,
     status: 'Prévia demonstrativa',
     source: 'sites para portfolio/yuugan-sushi-main/README.md',
   },
 ];
 
 // PENDÊNCIA: preencha somente contatos confirmados da LUME STUDIO.
-// Os contatos dos projetos apresentados pertencem às respectivas marcas.
-export const studio = {
-  email: '', // E-mail oficial do estúdio.
-  whatsapp: '', // DDI + DDD + número, somente dígitos.
-  instagram: '', // URL completa do perfil oficial.
-};
+export const studio = { email: '', whatsapp: '', instagram: '' };
 export const contactLinks = [
   ...(studio.whatsapp
     ? [

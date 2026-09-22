@@ -1,0 +1,194 @@
+{
+  "mypace": [
+    {
+      "src": "projects/mypace/01.jpg",
+      "label": "Acesso ao MyPace",
+      "alt": "Acesso ao MyPace — captura real da interface de MyPace",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/mypace/02.jpg",
+      "label": "Criação de conta",
+      "alt": "Criação de conta — captura real da interface de MyPace",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/mypace/03.jpg",
+      "label": "Acesso no celular",
+      "alt": "Acesso no celular — captura real da interface de MyPace",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "arquibancada": [
+    {
+      "src": "projects/arquibancada/01.jpg",
+      "label": "Página inicial",
+      "alt": "Página inicial — captura real da interface de Arquibancada Store",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/arquibancada/02.jpg",
+      "label": "Identidade da loja",
+      "alt": "Identidade da loja — captura real da interface de Arquibancada Store",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/arquibancada/03.jpg",
+      "label": "Catálogo de camisas",
+      "alt": "Catálogo de camisas — captura real da interface de Arquibancada Store",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/arquibancada/04.jpg",
+      "label": "Busca por time",
+      "alt": "Busca por time — captura real da interface de Arquibancada Store",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/arquibancada/05.jpg",
+      "label": "Versão para celular",
+      "alt": "Versão para celular — captura real da interface de Arquibancada Store",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "nvrmind": [
+    {
+      "src": "projects/nvrmind/01.jpg",
+      "label": "Página inicial",
+      "alt": "Página inicial — captura real da interface de NVRMIND",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/nvrmind/02.jpg",
+      "label": "Coleção 001",
+      "alt": "Coleção 001 — captura real da interface de NVRMIND",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/nvrmind/03.jpg",
+      "label": "Universo da marca",
+      "alt": "Universo da marca — captura real da interface de NVRMIND",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/nvrmind/04.jpg",
+      "label": "Editorial",
+      "alt": "Editorial — captura real da interface de NVRMIND",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/nvrmind/05.jpg",
+      "label": "Página de produto",
+      "alt": "Página de produto — captura real da interface de NVRMIND",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/nvrmind/06.jpg",
+      "label": "Versão para celular",
+      "alt": "Versão para celular — captura real da interface de NVRMIND",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "burgues": [
+    {
+      "src": "projects/burgues/01.jpg",
+      "label": "Página inicial",
+      "alt": "Página inicial — captura real da interface de Burguês",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/burgues/02.jpg",
+      "label": "Cardápio",
+      "alt": "Cardápio — captura real da interface de Burguês",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/burgues/03.jpg",
+      "label": "Detalhes do hambúrguer",
+      "alt": "Detalhes do hambúrguer — captura real da interface de Burguês",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/burgues/04.jpg",
+      "label": "A hamburgueria",
+      "alt": "A hamburgueria — captura real da interface de Burguês",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/burgues/05.jpg",
+      "label": "Galeria do ambiente",
+      "alt": "Galeria do ambiente — captura real da interface de Burguês",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/burgues/06.jpg",
+      "label": "Versão para celular",
+      "alt": "Versão para celular — captura real da interface de Burguês",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "yuugan": [
+    {
+      "src": "projects/yuugan/01.jpg",
+      "label": "Página inicial",
+      "alt": "Página inicial — captura real da interface de Yuugan Sushi",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/yuugan/02.jpg",
+      "label": "Seleção de pratos",
+      "alt": "Seleção de pratos — captura real da interface de Yuugan Sushi",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/yuugan/03.jpg",
+      "label": "Cardápio",
+      "alt": "Cardápio — captura real da interface de Yuugan Sushi",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/yuugan/04.jpg",
+      "label": "Essência do restaurante",
+      "alt": "Essência do restaurante — captura real da interface de Yuugan Sushi",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/yuugan/05.jpg",
+      "label": "Galeria gastronômica",
+      "alt": "Galeria gastronômica — captura real da interface de Yuugan Sushi",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "src": "projects/yuugan/06.jpg",
+      "label": "Versão para celular",
+      "alt": "Versão para celular — captura real da interface de Yuugan Sushi",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

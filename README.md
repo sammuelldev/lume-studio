@@ -1,8 +1,8 @@
 # Lume Studio
 
-Página de apresentação do estúdio, com a identidade visual fornecida e cinco trabalhos selecionados. React, TypeScript e Vite, seguindo a tecnologia dos projetos disponíveis. Há também configuração compatível com Sites/Vinext.
+Página de apresentação em React, TypeScript e Vite. Fundo preto, identidade oficial da Lume, títulos preservados e textos secundários em Inter local. Os cinco projetos são apresentados em galerias de capturas reais, sem links para abrir os sites.
 
-## Executar
+## Executar e publicar
 
 Requer Node.js 22.13 ou superior e npm.
 
@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-O comando prepara a prévia NVRMIND e inicia a Lume em `http://127.0.0.1:5173/`. Sirva sempre por HTTP: não abra o HTML diretamente.
+A Lume inicia em `http://127.0.0.1:5173/`. Sirva por HTTP, sem abrir o HTML diretamente.
 
 ```sh
 npm run typecheck
@@ -19,57 +19,58 @@ npm run build
 npm run preview
 ```
 
-A versão estática é gerada em `dist-pages/`. O workflow do GitHub Pages publica a branch `main`. Os caminhos relativos funcionam na subpasta `/lume-studio/` e na raiz de outro domínio.
+A saída estática fica em `dist-pages/`. O workflow do GitHub Pages publica a branch `main`. Os caminhos relativos funcionam na subpasta `/lume-studio/`.
 
-Repositório: https://github.com/sammuelldev/lume-studio
+- Site: https://sammuelldev.github.io/lume-studio/
+- Repositório: https://github.com/sammuelldev/lume-studio
+- Sites/Vinext: `npm run build:sites`, com a mesma página e configuração em `.openai/hosting.json`.
 
-Site: https://sammuelldev.github.io/lume-studio/
+## Conteúdo e identidade
 
-## Conteúdo e contatos
-
-- `lib/portfolio.ts`: lista central de trabalhos, descrições, categorias, fontes, imagens, links e contatos da Lume.
-- `app/page.tsx`: página, navegação acessível e menu do celular.
-- `app/globals.css`: paleta oficial, composição editorial e adaptação responsiva.
-- `public/brand`: arquivos oficiais para fundo escuro. A proporção original da marca é preservada; a aplicação no cabeçalho enquadra somente as margens vazias por CSS.
-- `public/projects`: capturas das interfaces reais.
-- `public/og.png`: banner oficial fornecido, reutilizado como imagem social.
-- `demos/nvrmind`: cópia independente e adaptada da prévia NVRMIND.
+- `lib/portfolio.ts`: projetos, descrições, categorias e contatos.
+- `lib/gallery-images.json`: fotos de cada projeto, legendas, textos alternativos e dimensões.
+- `components/project-gallery.tsx`: carrossel com setas, indicadores, arraste com mouse, gesto de toque e ampliação. Teclado, Escape, foco do diálogo e movimento reduzido também são atendidos. Não há reprodução automática.
+- `app/page.tsx`: apresentação, projetos, serviços, contato e navegação no celular. Os textos marcados na revisão e a seção Sobre foram removidos.
+- `app/globals.css`: composição editorial, fundo preto e adaptação responsiva.
+- `public/brand/logo-transparente.png`: PNG oficial transparente copiado sem alteração. Duas camadas CSS preservam o símbolo roxo e exibem as letras em branco no fundo preto, mantendo a proporção original.
+- `public/fonts`: Inter já disponível nos materiais locais, servida pelo próprio site.
+- `public/projects`: capturas das interfaces reais. O componente limita cada galeria a seis fotos.
 
 **Pendência de contato:** os materiais não contêm e-mail, WhatsApp ou Instagram da Lume. Preencha os campos do objeto `studio` em `lib/portfolio.ts`. Os links aparecem automaticamente quando configurados. Enquanto faltam, a seção informa que o canal será disponibilizado em breve. Não há formulário que simule envio nem contato de outra marca reutilizado.
 
-## Trabalhos incorporados
+Para adicionar um trabalho, inclua as imagens em `public/projects`, os dados no manifesto e a entrada em `projects`. Os campos `source` documentam a origem e não geram links na página.
 
-| Projeto | Origem e execução | Destino |
-| --- | --- | --- |
-| MyPace | Repositório `sammuelldev/my-pace`, HTML/CSS/JS modular com Firebase; a entrada pública exige autenticação para acessar dados pessoais | Publicação GitHub Pages confirmada no histórico de deploys |
-| Arquibancada Store | Repositório `sammuelldev/loja-de-camisas`, catálogo HTML/CSS/JS com atendimento da própria loja | Publicação GitHub Pages confirmada no histórico de deploys |
-| NVRMIND | Pasta `nvrmind-site`, React/Vinext; prévia demonstrativa de e-commerce | Cópia estática em `projetos/nvrmind/` |
-| Burguês | Pasta `burgues-hamburgueria-main`, React/Vite; site conceitual de hamburgueria | URL pública registrada no README original |
-| Yuugan Sushi | Pasta `yuugan-sushi-main`, React/Vite; prévia editorial com cardápio ilustrativo | URL pública registrada no README original |
+## Projetos incorporados
 
-O MyPace e a Arquibancada não estavam na pasta recebida, mas foram identificados pelo conteúdo dos repositórios do mesmo proprietário e pelos registros de publicação. Nenhum repositório dos projetos foi alterado.
+| Projeto            | Galeria                                                           | Origem                                                                |
+| ------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------- |
+| MyPace             | 3 fotos: acesso, cadastro e acesso no celular                     | Repositório `sammuelldev/my-pace`; telas públicas, sem dados pessoais |
+| Arquibancada Store | 5 fotos: início, identidade, catálogo, busca e celular            | Repositório `sammuelldev/loja-de-camisas`                             |
+| NVRMIND            | 6 fotos: início, coleção, manifesto, editorial, produto e celular | Pasta `nvrmind-site`, React/Vinext; projeto demonstrativo             |
+| Burguês            | 6 fotos: início, cardápio, detalhes, história, ambiente e celular | Pasta `burgues-hamburgueria-main`, React/Vite; projeto conceitual     |
+| Yuugan Sushi       | 6 fotos: início, pratos, cardápio, essência, galeria e celular    | Pasta `yuugan-sushi-main`, React/Vite; prévia demonstrativa           |
 
-## Integração NVRMIND
+MyPace e Arquibancada foram identificados pelo conteúdo dos repositórios do mesmo proprietário e pelos registros de publicação. As URLs públicas registradas são utilizadas somente pelo script de captura.
 
-A URL Sites registrada no projeto original responde com exigência de autenticação. Para permitir a visita ao trabalho, a Lume inclui uma cópia independente dos componentes, catálogo, estilos, imagens e fontes já fornecidos. A pasta original não participa do build e permanece intacta.
-
-As únicas adaptações são os imports, caminhos relativos de imagens/fontes e links de produto para `?produto=identificador`. A navegação funciona em hospedagem estática, inclusive ao recarregar uma página de produto. Catálogo, filtros, busca, favoritos, seleção de tamanho e sacola permanecem funcionais. A prévia não recebe pedidos nem pagamentos; mantém os avisos originais. Os dados da sacola e favoritos ficam neste navegador.
-
-`npm run build:demo` gera a prévia em `public/projetos/nvrmind/`, que o build principal incorpora. Essa saída é ignorada no Git, pois é reproduzível a partir da cópia versionada.
-
-## Validação e capturas
+## Capturas e validação
 
 ```sh
-node scripts/check-site.mjs
-node scripts/capture-projects.mjs
+node scripts/check-galleries.mjs
 ```
 
-Os scripts usam Playwright com Edge instalado. O primeiro requer o site local em execução e testa larguras de 320, 390, 768, 1440 e 1920 px, imagens, âncoras, menu, foco, Escape, movimento reduzido, páginas de produto e sacola da NVRMIND. Gera capturas e relatório em `validation/` e atualiza a captura NVRMIND. `LUME_TEST_URL` permite apontar a validação a outra origem ou à subpasta publicada. O segundo atualiza as quatro capturas de sites públicos, sem acessar dados privados do MyPace.
+Requer a Lume em execução e Playwright com Edge instalado. Verifica cinco larguras entre 320 e 1920 px, imagens, fontes, navegação, carrosséis, diálogo, arraste, toque e movimento reduzido. Salva capturas e relatório em `validation/`, ignorada pelo Git. `LUME_TEST_URL` permite validar outra origem ou a subpasta publicada.
 
-## Materiais e preservação
+Para atualizar as imagens, inicie a prévia local de captura em outro terminal:
 
-Não havia site principal da Lume nem `AGENTS.md` na pasta fornecida; este projeto foi criado isoladamente. O print mencionado não estava acessível como anexo ou arquivo: a implementação segue as logos, o banner, o fundo gráfico, a paleta e o guia oficial em `Lume_Studio_Identidade_Visual`.
+```sh
+npm run dev:demo
+node scripts/capture-galleries.mjs
+```
 
-As pastas Burguês, Yuugan, NVRMIND e identidade visual não foram modificadas. Não foram inventados equipe, depoimentos, resultados, dados comerciais ou contatos.
+O script captura os quatro sites públicos e a cópia local NVRMIND em `http://127.0.0.1:5174/index.html`. `LUME_NVRMIND_URL` permite configurar outra origem. O script substitui as capturas e o manifesto; revise o resultado antes de publicar.
 
-Para Sites: `npm run build:sites` usa a configuração original do gerador e a mesma página. A publicação estática no GitHub é independente dessa integração.
+`demos/nvrmind` é uma cópia independente dos materiais fornecidos, mantida apenas para capturas. Imports, caminhos e links de produto foram adaptados para execução local em Vite. `npm run build:demo` gera uma prévia em `.gallery-previews/nvrmind`, ignorada pelo Git. O site demonstrativo não integra o build nem a publicação da Lume.
+
+## Preservação dos materiais
+
+Não havia site principal da Lume nem `AGENTS.md` na pasta fornecida; este projeto foi criado isoladamente. As pastas originais Burguês, Yuugan, NVRMIND e identidade visual permanecem intactas. Nenhum repositório dos trabalhos foi alterado. Não foram inventados equipe, depoimentos, resultados ou contatos.

@@ -7,15 +7,15 @@
   },
   "scripts": {
     "dev": "vite --config vite.pages.config.ts",
-    "predev": "npm run build:demo",
+    "dev:demo": "vite --config vite.demo.config.ts",
     "build:demo": "vite build --config vite.demo.config.ts",
-    "build": "npm run build:demo && vite build --config vite.pages.config.ts",
+    "build": "vite build --config vite.pages.config.ts",
     "preview": "vite preview --config vite.pages.config.ts",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint",
     "format": "oxfmt",
     "dev:sites": "vinext dev",
-    "build:sites": "npm run build:demo && vinext build",
+    "build:sites": "vinext build",
     "start:sites": "wrangler dev --config dist/server/wrangler.json"
   },
   "dependencies": {

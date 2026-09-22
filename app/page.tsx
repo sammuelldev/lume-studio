@@ -1,25 +1,37 @@
 'use client';
+/* oxlint-disable nextjs/no-img-element -- A logo PNG local preserva o alfa e funciona no build estático, sem serviço de otimização de imagens. */
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ProjectGallery } from '@/components/project-gallery';
 import { contactLinks, projects } from '@/lib/portfolio';
+
 const navigation = [
-  ['Sobre', '#sobre'],
-  ['Serviços', '#servicos'],
   ['Projetos', '#projetos'],
+  ['Serviços', '#servicos'],
 ];
 function Brand() {
   return (
     <span className="brand-image">
       <img
-        src="brand/logo-escuro.png"
+        className="brand-symbol"
+        src="brand/logo-transparente.png"
         alt="Lume Studio"
+        width="2172"
+        height="724"
+      />
+      <img
+        className="brand-letters"
+        src="brand/logo-transparente.png"
+        alt=""
+        aria-hidden="true"
         width="2172"
         height="724"
       />
     </span>
   );
 }
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -33,6 +45,7 @@ export default function Home() {
     document.addEventListener('keydown', close);
     return () => document.removeEventListener('keydown', close);
   }, [menuOpen]);
+
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -81,13 +94,10 @@ export default function Home() {
           )}
         </nav>
       </header>
+
       <main id="conteudo">
         <section className="hero wrap" aria-labelledby="hero-title">
           <div className="hero-art" aria-hidden="true" />
-          <p className="eyebrow">
-            <span className="small-line" />
-            Design & desenvolvimento web
-          </p>
           <h1 id="hero-title">
             Boas ideias.
             <br />
@@ -108,11 +118,8 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="hero-footnote">
-            <span>Da primeira ideia ao último detalhe.</span>
-            <span>Design com intenção. Código com cuidado.</span>
-          </div>
         </section>
+
         <section
           className="projects-section wrap section-space"
           id="projetos"
@@ -120,110 +127,29 @@ export default function Home() {
         >
           <div className="section-heading">
             <div>
-              <p className="eyebrow">01 / Portfólio</p>
+              <p className="eyebrow">Projetos selecionados</p>
               <h2 id="projects-title">
                 Ideias que ganharam <em>forma.</em>
               </h2>
             </div>
-            <p>
-              Universos diferentes.
-              <br />O mesmo cuidado em cada projeto.
-            </p>
           </div>
           <div className="project-grid">
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <article
                 className={`project ${project.featured ? 'project-wide' : ''}`}
                 key={project.id}
               >
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`project-image project-${project.id}`}
-                  aria-label={`Visualizar ${project.name} — abre em nova aba`}
-                >
-                  <div className="project-preview">
-                    <img
-                      src={project.image}
-                      alt={project.imageAlt}
-                      width="1440"
-                      height="960"
-                      loading="lazy"
-                    />
-                  </div>
-                  <span className="project-open">
-                    <ArrowUpRight size={22} aria-hidden="true" />
-                  </span>
-                  {project.status && (
-                    <span className="project-status">{project.status}</span>
-                  )}
-                </a>
-                <div className="project-meta">
-                  <span>{project.category}</span>
-                  <span className="project-number">
-                    /{String(index + 1).padStart(2, '0')}
-                  </span>
+                <ProjectGallery project={project} />
+                <div className="project-info">
+                  <p className="project-category">{project.category}</p>
+                  <h3>{project.name}</h3>
+                  <p className="project-description">{project.description}</p>
                 </div>
-                <h3>
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.name}
-                    <ArrowUpRight size={23} aria-hidden="true" />
-                    <span className="sr-only"> — abre em nova aba</span>
-                  </a>
-                </h3>
-                <p className="project-description">{project.description}</p>
               </article>
             ))}
           </div>
-          <p className="portfolio-note">
-            Explore as interfaces. Projetos conceituais e demonstrativos estão
-            identificados em cada trabalho.
-          </p>
         </section>
-        <section
-          className="about-section"
-          id="sobre"
-          aria-labelledby="about-title"
-        >
-          <div className="wrap about-grid section-space">
-            <div>
-              <p className="eyebrow">02 / Sobre a Lume</p>
-              <h2 id="about-title">
-                Um olhar atento.
-                <br />
-                Do design
-                <br />
-                ao <em>código.</em>
-              </h2>
-            </div>
-            <div className="about-copy">
-              <span className="about-kicker">
-                O cuidado aparece nos detalhes.
-              </span>
-              <p>
-                A Lume Studio é um estúdio de desenvolvimento de sites e landing
-                pages. Aqui, design e desenvolvimento caminham juntos para
-                transformar ideias em experiências claras, bonitas e fáceis de
-                usar.
-              </p>
-              <p>
-                Cada projeto começa com escuta: entender o que você quer
-                comunicar, organizar o conteúdo e encontrar a melhor forma de
-                apresentá-lo. Do primeiro esboço à navegação no celular, cada
-                escolha tem um motivo.
-              </p>
-              <a className="text-link" href="#servicos">
-                O que podemos criar juntos{' '}
-                <ArrowDown size={18} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-        </section>
+
         <section
           className="services-section wrap section-space"
           id="servicos"
@@ -231,18 +157,13 @@ export default function Home() {
         >
           <div className="section-heading">
             <div>
-              <p className="eyebrow">03 / Serviços</p>
+              <p className="eyebrow">Serviços</p>
               <h2 id="services-title">
                 O próximo passo
                 <br />
                 para a sua <em>ideia.</em>
               </h2>
             </div>
-            <p>
-              Uma presença digital pensada
-              <br />
-              para o que você precisa.
-            </p>
           </div>
           <div className="service-list">
             {[
@@ -250,27 +171,21 @@ export default function Home() {
                 '01',
                 'Sites institucionais',
                 'Um espaço para apresentar sua marca, contar sua história e ajudar as pessoas a encontrar o que procuram.',
-                'Presença & identidade',
               ],
               [
                 '02',
                 'Landing pages',
                 'Páginas com uma mensagem clara, conteúdo bem organizado e um caminho direto para a ação que importa.',
-                'Clareza & direção',
               ],
               [
                 '03',
                 'Interfaces digitais',
-                'Telas e experiências para produtos digitais, com atenção à navegação, à hierarquia e ao uso no dia a dia.',
-                'Experiência & interação',
+                'Telas e experiências para produtos digitais, com atenção à navegação e ao uso no dia a dia.',
               ],
-            ].map(([number, title, description, note]) => (
+            ].map(([number, title, description]) => (
               <article className="service-row" key={number}>
                 <span className="service-number">{number}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <span className="service-note">{note}</span>
-                </div>
+                <h3>{title}</h3>
                 <p>{description}</p>
                 <ArrowUpRight
                   className="service-arrow"
@@ -281,17 +196,15 @@ export default function Home() {
               </article>
             ))}
           </div>
-          <p className="services-footnote">
-            Design e desenvolvimento, com atenção ao desktop e ao celular.
-          </p>
         </section>
+
         <section
           className="contact-section"
           id="contato"
           aria-labelledby="contact-title"
         >
           <div className="wrap section-space contact-inner">
-            <p className="eyebrow">04 / Vamos conversar</p>
+            <p className="eyebrow">Vamos conversar</p>
             <div className="contact-heading">
               <h2 id="contact-title">
                 Sua próxima ideia
@@ -333,6 +246,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       <footer className="site-footer wrap">
         <div className="footer-top">
           <a
@@ -342,19 +256,13 @@ export default function Home() {
           >
             <Brand />
           </a>
-          <p>
-            Boas ideias merecem
-            <br />
-            uma boa presença digital.
-          </p>
           <a className="back-top" href="#topo">
             Voltar ao topo <ArrowUp size={17} aria-hidden="true" />
           </a>
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Lume Studio</span>
-          <span>Design & desenvolvimento web</span>
-          <span>Feito com intenção.</span>
+          <span>Sites, landing pages e interfaces digitais.</span>
         </div>
       </footer>
     </>

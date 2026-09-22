@@ -13,5 +13,7 @@ export default defineConfig({
     dedupe: ['react', 'react-dom'],
   },
   css: { postcss: { plugins: [tailwindcss()] } },
-  build: { outDir: '../../public/projetos/nvrmind', emptyOutDir: true },
+  optimizeDeps: { entries: ['index.html'] },
+  server: { host: '127.0.0.1', port: 5174, strictPort: true },
+  build: { outDir: '../../.gallery-previews/nvrmind', emptyOutDir: true },
 });
