@@ -47,19 +47,39 @@ try {
     );
   assert.equal(
     await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
-    'rgb(0, 0, 0)',
+    'rgb(23, 22, 25)',
   );
   assert.match(
     await page
-      .locator('.hero-bottom p')
+      .locator('.hero-description')
       .evaluate((el) => getComputedStyle(el).fontFamily),
-    /Inter/,
+    /Geist/,
   );
   assert.match(
     await page.locator('h1').evaluate((el) => getComputedStyle(el).fontFamily),
-    /Arial/,
+    /Geist/,
   );
-  for (const width of [320, 390, 768, 1440, 1920]) {
+  assert.match(
+    await page
+      .locator('h1 em')
+      .evaluate((el) => getComputedStyle(el).fontFamily),
+    /Instrument Serif/,
+  );
+  assert.equal(
+    await page
+      .locator('#servicos')
+      .evaluate((el) => getComputedStyle(el).backgroundColor),
+    'rgb(241, 239, 233)',
+  );
+  assert.equal(
+    await page
+      .locator('#contato')
+      .evaluate((el) => getComputedStyle(el).backgroundColor),
+    'rgb(200, 185, 220)',
+  );
+  assert.equal(await page.locator('.hero-preview .gallery').count(), 1);
+  assert.equal(await page.locator('.project .gallery-slide').count(), 26);
+  for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 960 });
     await page.evaluate(async () => {
       for (const img of document.images) img.loading = 'eager';
@@ -79,26 +99,55 @@ try {
       });
   }
   checks.push(
-    'Cinco larguras sem overflow, imagens carregadas, fundo preto e fontes verificadas.',
+    'Seis larguras sem overflow, 26 capturas preservadas, paleta e combinação de fontes verificadas.',
   );
   await page.setViewportSize({ width: 1440, height: 960 });
-  for (const gallery of await page.locator('.gallery').all()) {
+  for (const gallery of await page.locator('.project .gallery').all()) {
     const slides = await gallery.locator('.gallery-slide').count();
     assert(slides >= 2 && slides <= 6);
     const next = gallery.getByRole('button', { name: /Próxima imagem de/ });
     await next.click();
     await page.waitForTimeout(450);
-    assert.match(await gallery.locator('.gallery-count').textContent(), /^02/);
-    await gallery.locator('.gallery-dot').last().click();
+    assert.match(
+      await gallery.locator('.gallery-count').textContent(),
+      /02\s*\//,
+    );
+    await gallery.locator('.gallery-track').focus();
+    await page.keyboard.press('End');
     await page.waitForTimeout(450);
     assert.equal(await next.isDisabled(), true);
-    await gallery.locator('.gallery-dot').first().click();
+    await gallery.locator('.gallery-track').focus();
+    await page.keyboard.press('Home');
     await page.waitForTimeout(450);
     await gallery.locator('.gallery-image-button').first().click();
     const dialog = page.getByRole('dialog');
     await dialog.waitFor();
     await page.keyboard.press('ArrowRight');
     assert.match(await dialog.textContent(), /2 de/);
+    await dialog.locator('.gallery-dot').last().click();
+    assert.equal(
+      await dialog
+        .getByRole('button', { name: 'Próxima imagem', exact: true })
+        .isDisabled(),
+      true,
+    );
+    for (let tab = 0; tab < 10; tab++) {
+      await page.keyboard.press('Tab');
+      // O Base UI passa brevemente por uma sentinela e devolve o foco no mesmo ciclo.
+      await page.waitForFunction(
+        () =>
+          document
+            .querySelector('[role="dialog"]')
+            ?.contains(document.activeElement),
+        undefined,
+        { timeout: 2000 },
+      );
+      assert.equal(
+        await dialog.evaluate((el) => el.contains(document.activeElement)),
+        true,
+        'O foco deve permanecer na galeria aberta.',
+      );
+    }
     await page.keyboard.press('Escape');
     await dialog.waitFor({ state: 'hidden' });
     assert.equal(
@@ -109,12 +158,28 @@ try {
       true,
       'Foco deve voltar ao acionador.',
     );
-    await gallery.locator('.gallery-dot').first().click();
+    await gallery.locator('.gallery-track').focus();
+    await page.keyboard.press('Home');
   }
   checks.push(
     'Cinco galerias com até seis fotos: setas, indicadores, ampliação, teclado e Escape funcionam.',
   );
-  const first = page.locator('.gallery').first();
+  const heroTrigger = page
+    .locator('.hero-preview .gallery-image-button')
+    .first();
+  await heroTrigger.click();
+  await page.getByRole('dialog').waitFor();
+  assert.match(await page.getByRole('dialog').textContent(), /NVRMIND/);
+  await page
+    .getByRole('button', { name: 'Fechar galeria', exact: true })
+    .click();
+  await page.getByRole('dialog').waitFor({ state: 'hidden' });
+  assert.equal(
+    await heroTrigger.evaluate((el) => el === document.activeElement),
+    true,
+  );
+  checks.push('A prévia da abertura abre a galeria NVRMIND e devolve o foco.');
+  const first = page.locator('.project .gallery').first();
   const rail = first.locator('.gallery-track');
   await rail.scrollIntoViewIfNeeded();
   await page.waitForTimeout(450);
@@ -126,7 +191,7 @@ try {
   });
   await page.mouse.up();
   await page.waitForTimeout(450);
-  assert.match(await first.locator('.gallery-count').textContent(), /^02/);
+  assert.match(await first.locator('.gallery-count').textContent(), /02\s*\//);
   assert.equal(
     await page.getByRole('dialog').count(),
     0,
@@ -143,7 +208,7 @@ try {
   await first.locator('.gallery-dot').first().click();
   await rail.focus();
   await page.keyboard.press('ArrowRight');
-  assert.match(await first.locator('.gallery-count').textContent(), /^02/);
+  assert.match(await first.locator('.gallery-count').textContent(), /02\s*\//);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole('button', { name: 'Abrir menu', exact: true }).click();
   await page
@@ -191,7 +256,7 @@ try {
   await swipe(mobileRail);
   assert.match(
     await mobileGallery.locator('.gallery-count').textContent(),
-    /^02/,
+    /02\s*\//,
   );
   assert.equal(await mobile.getByRole('dialog').count(), 0);
   await mobileGallery.locator('.gallery-image-button').nth(1).tap();

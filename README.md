@@ -1,6 +1,6 @@
 # Lume Studio
 
-Página de apresentação em React, TypeScript e Vite. Fundo preto, identidade oficial da Lume, títulos preservados e textos secundários em Inter local. Os cinco projetos são apresentados em galerias de capturas reais, sem links para abrir os sites.
+Página de apresentação em React, TypeScript e Vite. Composição editorial em grafite, serviços em branco suave e contato em lavanda. Títulos em Geist e destaques em Instrument Serif itálica seguem as referências fornecidas. Os cinco projetos são apresentados em galerias de capturas reais, sem links para abrir os sites.
 
 ## Executar e publicar
 
@@ -29,14 +29,17 @@ A saída estática fica em `dist-pages/`. O workflow do GitHub Pages publica a b
 
 - `lib/portfolio.ts`: projetos, descrições, categorias e contatos.
 - `lib/gallery-images.json`: fotos de cada projeto, legendas, textos alternativos e dimensões.
-- `components/project-gallery.tsx`: carrossel com setas, indicadores, arraste com mouse, gesto de toque e ampliação. Teclado, Escape, foco do diálogo e movimento reduzido também são atendidos. Não há reprodução automática.
-- `app/page.tsx`: apresentação, projetos, serviços, contato e navegação no celular. Os textos marcados na revisão e a seção Sobre foram removidos.
-- `app/globals.css`: composição editorial, fundo preto e adaptação responsiva.
-- `public/brand/logo-transparente.png`: PNG oficial transparente copiado sem alteração. Duas camadas CSS preservam o símbolo roxo e exibem as letras em branco no fundo preto, mantendo a proporção original.
-- `public/fonts`: Inter já disponível nos materiais locais, servida pelo próprio site.
+- `components/project-gallery.tsx`: versões para abertura, cards, destaque horizontal e projetos secundários. Ampliação em tela cheia com nome, categoria, classificação, setas, indicadores e contador. Arraste, toque, teclado, Escape e retorno de foco preservados, sem reprodução automática.
+- `components/brand.tsx`: apresentação da marca e contorno do símbolo derivado do alfa do PNG oficial, sem alterar o arquivo original.
+- `components/icons.ts`: ícones Phosphor com imports individuais, evitando carregar todo o catálogo.
+- `hooks/use-page-motion.ts`: entradas discretas e indicação da seção ativa via IntersectionObserver. Conteúdo visível mesmo sem animação; preferência por movimento reduzido respeitada.
+- `app/page.tsx`: abertura em duas colunas, NVRMIND em destaque, portfólio, serviços em linhas amplas, contato e rodapé.
+- `app/globals.css`: cores, tipografia, composição editorial, foco visível e adaptação responsiva.
+- `public/brand/logo-transparente.png`: PNG oficial transparente preservado. Duas camadas CSS conservam o símbolo roxo e exibem as letras em branco sobre o grafite.
+- `public/fonts`: Geist, Geist Mono e Instrument Serif, servidas localmente. Fontes obtidas do repositório oficial `google/fonts`, acompanhadas das licenças SIL OFL. Os arquivos Inter existentes foram preservados.
 - `public/projects`: capturas das interfaces reais. O componente limita cada galeria a seis fotos.
 
-**Pendência de contato:** os materiais não contêm e-mail, WhatsApp ou Instagram da Lume. Preencha os campos do objeto `studio` em `lib/portfolio.ts`. Os links aparecem automaticamente quando configurados. Enquanto faltam, a seção informa que o canal será disponibilizado em breve. Não há formulário que simule envio nem contato de outra marca reutilizado.
+**Pendência de contato:** os materiais não contêm e-mail, WhatsApp ou Instagram da Lume. Preencha os campos do objeto `studio` em `lib/portfolio.ts`. Os links aparecem automaticamente quando configurados. Enquanto faltam, o botão de contato fica desabilitado com uma explicação visível. Os demais convites levam à seção de contato. Não há formulário que simule envio nem contato de outra marca reutilizado.
 
 Para adicionar um trabalho, inclua as imagens em `public/projects`, os dados no manifesto e a entrada em `projects`. Os campos `source` documentam a origem e não geram links na página.
 
@@ -58,7 +61,7 @@ MyPace e Arquibancada foram identificados pelo conteúdo dos repositórios do me
 node scripts/check-galleries.mjs
 ```
 
-Requer a Lume em execução e Playwright com Edge instalado. Verifica cinco larguras entre 320 e 1920 px, imagens, fontes, navegação, carrosséis, diálogo, arraste, toque e movimento reduzido. Salva capturas e relatório em `validation/`, ignorada pelo Git. `LUME_TEST_URL` permite validar outra origem ou a subpasta publicada.
+Requer a Lume em execução e Playwright com Edge instalado. Verifica seis larguras entre 320 e 1920 px, as 26 imagens preservadas, paleta, fontes, navegação, carrosséis, diálogo, foco, arraste, toque e movimento reduzido. A prévia do NVRMIND na abertura também é validada. Salva capturas e relatório em `validation/`, ignorada pelo Git. `LUME_TEST_URL` permite validar outra origem ou subpasta.
 
 Para atualizar as imagens, inicie a prévia local de captura em outro terminal:
 

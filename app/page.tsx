@@ -1,40 +1,53 @@
 'use client';
-/* oxlint-disable nextjs/no-img-element -- A logo PNG local preserva o alfa e funciona no build estático, sem serviço de otimização de imagens. */
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUp, ArrowUpRight, Menu, X } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpRight,
+  ArrowRight,
+} from '@/components/icons';
 import { Button } from '@/components/ui/button';
+import { Brand, BrandSymbol } from '@/components/brand';
 import { ProjectGallery } from '@/components/project-gallery';
+import { usePageMotion } from '@/hooks/use-page-motion';
 import { contactLinks, projects } from '@/lib/portfolio';
 
 const navigation = [
   ['Projetos', '#projetos'],
   ['Serviços', '#servicos'],
 ];
-function Brand() {
-  return (
-    <span className="brand-image">
-      <img
-        className="brand-symbol"
-        src="brand/logo-transparente.png"
-        alt="Lume Studio"
-        width="2172"
-        height="724"
-      />
-      <img
-        className="brand-letters"
-        src="brand/logo-transparente.png"
-        alt=""
-        aria-hidden="true"
-        width="2172"
-        height="724"
-      />
-    </span>
-  );
-}
+const featured = projects.find((project) => project.featured)!;
+const firstProjects = projects.filter((project) =>
+  ['mypace', 'arquibancada'].includes(project.id),
+);
+const remainingProjects = projects.filter(
+  (project) => !project.featured && !firstProjects.includes(project),
+);
+const services = [
+  {
+    title: 'Sites institucionais',
+    description:
+      'Um espaço para apresentar sua marca, contar sua história e facilitar o contato.',
+    details: ['Apresentação', 'Conteúdo', 'Responsividade'],
+  },
+  {
+    title: 'Landing pages',
+    description:
+      'Uma mensagem clara, conteúdo bem organizado e um caminho direto para a ação.',
+    details: ['Campanhas', 'Lançamentos', 'Captação'],
+  },
+  {
+    title: 'Interfaces digitais',
+    description:
+      'Telas e experiências que tornam a navegação mais simples no dia a dia.',
+    details: ['Produtos digitais', 'Navegação', 'Experiência'],
+  },
+];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
+  const activeSection = usePageMotion();
   useEffect(() => {
     const close = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && menuOpen) {
@@ -58,24 +71,33 @@ export default function Home() {
           </a>
           <nav className="desktop-nav" aria-label="Navegação principal">
             {navigation.map(([label, href]) => (
-              <a key={href} href={href}>
+              <a
+                key={href}
+                href={href}
+                aria-current={
+                  activeSection === href.slice(1) ? 'location' : undefined
+                }
+              >
                 {label}
               </a>
             ))}
           </nav>
           <a className="header-contact" href="#contato">
-            Vamos conversar <ArrowUpRight size={17} aria-hidden="true" />
+            Vamos conversar{' '}
+            <ArrowUpRight size={20} weight="light" aria-hidden="true" />
           </a>
           <Button
             ref={menuButton}
             variant="ghost"
             className="menu-toggle"
+            data-open={menuOpen || undefined}
             aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={menuOpen}
             aria-controls="menu-mobile"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+            <span />
+            <span />
           </Button>
         </div>
         <nav
@@ -86,9 +108,16 @@ export default function Home() {
         >
           {[...navigation, ['Vamos conversar', '#contato']].map(
             ([label, href]) => (
-              <a key={href} href={href} onClick={() => setMenuOpen(false)}>
+              <a
+                key={href}
+                href={href}
+                aria-current={
+                  activeSection === href.slice(1) ? 'location' : undefined
+                }
+                onClick={() => setMenuOpen(false)}
+              >
                 {label}
-                <ArrowUpRight size={18} aria-hidden="true" />
+                <ArrowUpRight size={24} weight="light" aria-hidden="true" />
               </a>
             ),
           )}
@@ -96,105 +125,180 @@ export default function Home() {
       </header>
 
       <main id="conteudo">
-        <section className="hero wrap" aria-labelledby="hero-title">
-          <div className="hero-art" aria-hidden="true" />
-          <h1 id="hero-title">
-            Boas ideias.
-            <br />
-            Sites <span>à altura.</span>
-          </h1>
-          <div className="hero-bottom">
-            <p>
+        <section
+          className="hero wrap"
+          id="apresentacao"
+          aria-labelledby="hero-title"
+        >
+          <div className="hero-copy" data-reveal>
+            <h1 id="hero-title">
+              Boas ideias.
+              <br />
+              Sites <br />
+              <em>à altura.</em>
+            </h1>
+            <p className="hero-description">
               Criamos sites com personalidade, organização e cuidado com cada
               detalhe. Para dar forma à sua ideia e fazer sentido para quem
               navega.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#projetos">
-                Conheça os projetos <ArrowDown size={18} aria-hidden="true" />
+                Conheça os projetos{' '}
+                <ArrowDown size={24} weight="light" aria-hidden="true" />
               </a>
               <a className="text-link" href="#contato">
-                Vamos conversar <ArrowUpRight size={18} aria-hidden="true" />
+                Vamos conversar{' '}
+                <ArrowUpRight size={24} weight="light" aria-hidden="true" />
               </a>
             </div>
           </div>
+          <aside
+            className="hero-preview"
+            aria-label="Projeto em destaque"
+            data-reveal
+          >
+            <ProjectGallery project={featured} variant="hero" />
+          </aside>
+          <ul className="hero-service-strip" aria-label="O que fazemos">
+            {services.map((service) => (
+              <li key={service.title}>
+                {service.title}
+                <ArrowUpRight size={20} weight="light" aria-hidden="true" />
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section
-          className="projects-section wrap section-space"
+          className="projects-section wrap"
           id="projetos"
           aria-labelledby="projects-title"
         >
-          <div className="section-heading">
+          <div className="projects-heading" data-reveal>
             <div>
               <p className="eyebrow">Projetos selecionados</p>
               <h2 id="projects-title">
-                Ideias que ganharam <em>forma.</em>
+                Ideias que ganharam
+                <br />
+                <em>forma.</em>
               </h2>
+            </div>
+            <div className="projects-intro">
+              <span className="mono">
+                01 — {String(projects.length).padStart(2, '0')}
+              </span>
+              <p>
+                Uma seleção de sites e experiências digitais criados pela Lume.
+              </p>
             </div>
           </div>
           <div className="project-grid">
-            {projects.map((project) => (
+            {firstProjects.map((project) => (
               <article
-                className={`project ${project.featured ? 'project-wide' : ''}`}
+                className="project"
+                id={`projeto-${project.id}`}
                 key={project.id}
+                data-reveal
               >
                 <ProjectGallery project={project} />
-                <div className="project-info">
-                  <p className="project-category">{project.category}</p>
-                  <h3>{project.name}</h3>
-                  <p className="project-description">{project.description}</p>
-                </div>
               </article>
             ))}
+          </div>
+          <div className="portfolio-continuation">
+            <div className="portfolio-divider">
+              <span className="eyebrow">Projetos em destaque</span>
+              <span aria-hidden="true" />
+            </div>
+            <article
+              className="project project-wide"
+              id={`projeto-${featured.id}`}
+              data-reveal
+            >
+              <ProjectGallery project={featured} variant="featured" />
+            </article>
+            <div className="project-grid secondary-projects">
+              {remainingProjects.map((project) => (
+                <article
+                  className="project"
+                  id={`projeto-${project.id}`}
+                  key={project.id}
+                  data-reveal
+                >
+                  <ProjectGallery project={project} variant="compact" />
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
         <section
-          className="services-section wrap section-space"
+          className="services-section"
           id="servicos"
           aria-labelledby="services-title"
         >
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">Serviços</p>
-              <h2 id="services-title">
-                O próximo passo
-                <br />
-                para a sua <em>ideia.</em>
-              </h2>
+          <div className="wrap">
+            <div className="services-layout">
+              <div className="services-intro" data-reveal>
+                <p className="eyebrow">O que a Lume faz</p>
+                <h2 id="services-title">
+                  O próximo <br />
+                  passo
+                  <br />
+                  para a sua <br />
+                  <em>ideia.</em>
+                </h2>
+                <p className="services-description">
+                  Design e desenvolvimento para apresentar sua marca e dar forma
+                  ao seu projeto.
+                </p>
+                <a className="text-link underlined" href="#contato">
+                  Vamos conversar{' '}
+                  <ArrowUpRight size={24} weight="light" aria-hidden="true" />
+                </a>
+                <BrandSymbol className="services-symbol" />
+              </div>
+              <div className="service-list">
+                {services.map((service, index) => (
+                  <article
+                    className="service-row"
+                    key={service.title}
+                    data-reveal
+                  >
+                    <span className="service-number mono">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <h3>{service.title}</h3>
+                      <p>{service.description}</p>
+                      <ul
+                        className="service-details"
+                        aria-label={`Detalhes de ${service.title}`}
+                      >
+                        {service.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <a
+                      href="#contato"
+                      className="service-link"
+                      aria-label={`Conversar sobre ${service.title.toLowerCase()}`}
+                    >
+                      <ArrowRight size={48} weight="light" aria-hidden="true" />
+                    </a>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="service-list">
-            {[
-              [
-                '01',
-                'Sites institucionais',
-                'Um espaço para apresentar sua marca, contar sua história e ajudar as pessoas a encontrar o que procuram.',
-              ],
-              [
-                '02',
-                'Landing pages',
-                'Páginas com uma mensagem clara, conteúdo bem organizado e um caminho direto para a ação que importa.',
-              ],
-              [
-                '03',
-                'Interfaces digitais',
-                'Telas e experiências para produtos digitais, com atenção à navegação e ao uso no dia a dia.',
-              ],
-            ].map(([number, title, description]) => (
-              <article className="service-row" key={number}>
-                <span className="service-number">{number}</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <ArrowUpRight
-                  className="service-arrow"
-                  size={28}
-                  strokeWidth={1}
-                  aria-hidden="true"
-                />
-              </article>
-            ))}
+            <ul
+              className="service-principles"
+              aria-label="Nosso cuidado em cada projeto"
+            >
+              <li>Clareza no conteúdo.</li>
+              <li>Personalidade no design.</li>
+              <li>Cuidado no desenvolvimento.</li>
+            </ul>
           </div>
         </section>
 
@@ -203,43 +307,58 @@ export default function Home() {
           id="contato"
           aria-labelledby="contact-title"
         >
-          <div className="wrap section-space contact-inner">
-            <p className="eyebrow">Vamos conversar</p>
-            <div className="contact-heading">
+          <div className="wrap contact-inner">
+            <BrandSymbol outline className="contact-symbol" />
+            <div className="contact-content" data-reveal>
+              <p className="eyebrow">Vamos conversar</p>
               <h2 id="contact-title">
-                Sua próxima ideia
+                Sua próxima ideia <br />
+                começa
                 <br />
-                começa <em>por aqui.</em>
+                <em>por aqui.</em>
               </h2>
-              <ArrowUpRight size={100} strokeWidth={0.8} aria-hidden="true" />
-            </div>
-            <div className="contact-bottom">
-              <p>
+              <p className="contact-description">
                 Tem um projeto em mente?
                 <br />
                 Vamos pensar juntos em como colocá-lo no mundo.
               </p>
-              <div className="contact-links">
+              <div className="contact-actions">
                 {contactLinks.length ? (
-                  contactLinks.map((link) => (
+                  contactLinks.map((link, index) => (
                     <a
-                      className="button primary"
+                      className="button dark"
                       key={link.url}
                       href={link.url}
                       {...(link.url.startsWith('https:')
                         ? { target: '_blank', rel: 'noopener noreferrer' }
                         : {})}
                     >
-                      {link.label}
-                      <ArrowUpRight size={18} aria-hidden="true" />
+                      {index === 0 ? 'Vamos conversar' : link.label}
+                      <ArrowUpRight
+                        size={24}
+                        weight="light"
+                        aria-hidden="true"
+                      />
                     </a>
                   ))
                 ) : (
-                  <p className="contact-pending">
-                    Nosso canal de contato será
-                    <br />
-                    disponibilizado em breve.
-                  </p>
+                  <>
+                    <Button
+                      className="button dark contact-unavailable"
+                      disabled
+                      aria-describedby="contact-pending"
+                    >
+                      Vamos conversar{' '}
+                      <ArrowUpRight
+                        size={24}
+                        weight="light"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                    <p className="contact-pending" id="contact-pending">
+                      Nosso canal de contato será disponibilizado em breve.
+                    </p>
+                  </>
                 )}
               </div>
             </div>
@@ -247,22 +366,35 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer wrap">
-        <div className="footer-top">
-          <a
-            href="#topo"
-            className="brand"
-            aria-label="Lume Studio — voltar ao início"
-          >
-            <Brand />
-          </a>
-          <a className="back-top" href="#topo">
-            Voltar ao topo <ArrowUp size={17} aria-hidden="true" />
-          </a>
+      <footer className="site-footer">
+        <div className="wrap">
+          <div className="footer-top">
+            <a
+              href="#topo"
+              className="brand"
+              aria-label="Lume Studio — voltar ao início"
+            >
+              <Brand />
+            </a>
+            <nav className="footer-nav" aria-label="Navegação no rodapé">
+              {navigation.map(([label, href]) => (
+                <a key={href} href={href}>
+                  {label}
+                </a>
+              ))}
+              <a className="back-top" href="#topo">
+                Voltar ao topo{' '}
+                <ArrowUp size={24} weight="light" aria-hidden="true" />
+              </a>
+            </nav>
+          </div>
+          <div className="footer-bottom">
+            <p>Sites, landing pages e interfaces digitais.</p>
+            <p>© {new Date().getFullYear()} Lume Studio</p>
+          </div>
         </div>
-        <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Lume Studio</span>
-          <span>Sites, landing pages e interfaces digitais.</span>
+        <div className="footer-signature" aria-hidden="true">
+          LUME STUDIO
         </div>
       </footer>
     </>
